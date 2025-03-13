@@ -81,11 +81,12 @@
             $("#experience-list").html(currentData.experience.map(exp => `<li><h3 class="text-lg font-semibold">${exp.title}</h3><p>${exp.company} (${exp.time})</p><p>${exp.description}</p></li>`).join(''));
             $("#certifications-list").html(currentData.certifications.map(cert => `
                 <li class="bg-white shadow-md rounded-lg overflow-hidden p-4 mb-4 flex items-center animate__animated animate__fadeInUp transition-transform transform hover:scale-105">
-                    <img src="${cert.image}" alt="${cert.title}" class="w-24 h-24 object-cover rounded shadow-md mr-4">
+                    <a href="${cert.link}" target="_blank"><img src="${cert.image}" alt="${cert.title}" class="w-24 h-24 object-cover rounded shadow-md mr-4">
                     <div>
                         <h3 class="text-lg font-semibold">${cert.title}</h3>
                         <p class="text-sm text-gray-700">${cert.year}</p>
                     </div>
+                    </a>
                 </li>
             `).join(''));
             $("#projects-list").html(currentData.projects.map(project => `
