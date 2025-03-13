@@ -75,7 +75,7 @@
             $("#profile-picture").attr("src", currentData.profilePicture);
             $("#summary-text").text(currentData.summary);
             $("#certifications-h2").text(currentData.labels.certifications);
-            $("#experience-list, #projects-list, #skills-list").html("");
+            $("#experience-list, #projects-list, #skills-list","certification-slider","education-list").html("");
             currentData.education.forEach(edu => {
                 $("#education-list").append(`<li>${edu.degree} - ${edu.school} (${edu.time})</li>`);
             });
