@@ -26,19 +26,17 @@
             <h2 class="text-2xl font-semibold" id="summary-h2"></h2>
             <p id="summary-text"></p>
         </section>
-        <section id="education" class="bg-white shadow-lg p-4 rounded mb-6 ">
+
+        <section class="bg-white shadow-lg p-4 rounded mb-6">
             <h2 class="text-2xl font-semibold" id="education-h2"></h2>
             <ul id="education-list" class="list-disc pl-6"></ul>
         </section>
+
         <section class="bg-white shadow-lg p-4 rounded mb-6">
             <h2 class="text-2xl font-semibold" id="experience-h2"></h2>
             <ul id="experience-list" class="list-disc pl-6"></ul>
         </section>
-       
-        <section id="certifications" class="bg-white shadow-lg p-4 rounded mb-6">
-            <h2 class="text-2xl font-semibold" id="certifications-h2"></h2>
-            <div id="certification-slider"></div>
-        </section>
+
         <section class="bg-white shadow-lg p-4 rounded mb-6">
             <h2 class="text-2xl font-semibold" id="projects-h2"></h2>
             <div id="projects-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
@@ -74,45 +72,21 @@
             $("#email").text(currentData.email).attr("href", "mailto:" + currentData.email);
             $("#profile-picture").attr("src", currentData.profilePicture);
             $("#summary-text").text(currentData.summary);
-            $("#certifications-h2").text(currentData.labels.certifications);
-            $("#experience-list, #projects-list, #skills-list","#certification-slider","#education-list").html("");
-            currentData.education.forEach(edu => {
-                $("#education-list").append(`<li>${edu.degree} - ${edu.school} (${edu.time})</li>`);
-            });
-            currentData.experience.forEach(exp => {
-                $("#experience-list").append(`<li><h3 class="text-lg font-semibold">${exp.title}</h3><p>${exp.company} (${exp.time})</p><p>${exp.description}</p></li>`);
-            });
-            
-            currentData.projects.forEach(project => {
-                $("#projects-list").append(`
-                    <div class="bg-white shadow-md rounded-lg overflow-hidden p-4">
-                        <h3 class="text-lg font-semibold">${project.title}</h3>
-                        <p class="text-sm text-gray-700">${project.description}</p>
-                        <div class="grid grid-cols-2 gap-2 mt-2">
-                            ${project.images.map(image => `
-                                <a href="${image}" target="_blank">
-                                    <img src="${image}" alt="${project.title}" class="w-full h-32 object-cover rounded shadow-md">
-                                </a>
-                            `).join('')}
-                        </div>
+
+            $("#education-list").html(currentData.education.map(edu => `<li>${edu.degree} - ${edu.school} (${edu.time})</li>`).join(''));
+            $("#experience-list").html(currentData.experience.map(exp => `<li><h3 class="text-lg font-semibold">${exp.title}</h3><p>${exp.company} (${exp.time})</p><p>${exp.description}</p></li>`).join(''));
+
+            $("#projects-list").html(currentData.projects.map(project => `
+                <div class="bg-white shadow-md rounded-lg overflow-hidden p-4">
+                    <h3 class="text-lg font-semibold">${project.title}</h3>
+                    <p class="text-sm text-gray-700">${project.description}</p>
+                    <div class="grid grid-cols-2 gap-2 mt-2">
+                        ${project.images.map(image => `<a href="${image}" target="_blank"><img src="${image}" alt="${project.title}" class="w-full h-32 object-cover rounded shadow-md"></a>`).join('')}
                     </div>
-                `);
-            });
-            currentData.certifications.forEach(cert => {
-                $("#certification-slider").append(`
-                    <div class="certification bg-white shadow-md rounded-lg overflow-hidden m-2 inline-block" style="width: 300px; height: 400px;">
-                        <a href="${cert.link}" target="_blank" class="block h-full">
-                            <img src="${cert.image}" alt="${cert.title}" class="w-full h-3/4 object-cover">
-                            <div class="p-4 h-1/4 flex items-center justify-center">
-                                <p class="text-center font-semibold">${cert.title} (${cert.year})</p>
-                            </div>
-                        </a>
-                    </div>
-                `);
-            });
-            currentData.skills.forEach(skill => {
-                $("#skills-list").append(`<li class="bg-gray-200 p-2 rounded text-center list-none">${skill}</li>`);
-            });
+                </div>
+            `).join(''));
+
+            $("#skills-list").html(currentData.skills.map(skill => `<li class="bg-gray-200 p-2 rounded text-center list-none">${skill}</li>`).join(''));
         }
 
         $("#btn-vi").click(() => switchLanguage("vi"));
