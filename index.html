@@ -11,53 +11,48 @@
 </head>
 
 <body class="bg-gray-100 text-gray-800">
-
-    <!-- Header -->
     <header class="bg-blue-600 text-white p-6 text-center animate__animated animate__fadeIn">
         <h1 class="text-3xl font-bold" id="name"></h1>
         <p class="mt-2">Email: <a href="#" id="email" class="text-blue-200 underline"></a></p>
-        <img id="profile-picture" class="w-32 h-32 rounded-full mx-auto mt-4" alt="Ảnh đại diện">
+        <img id="profile-picture" class="w-24 h-24 sm:w-32 sm:h-32 rounded-full mx-auto mt-4 shadow-lg" alt="Ảnh đại diện">
         <div class="mt-4">
             <button id="btn-vi" class="bg-gray-800 text-white px-4 py-2 rounded mr-2">Tiếng Việt</button>
             <button id="btn-en" class="bg-gray-800 text-white px-4 py-2 rounded">English</button>
         </div>
     </header>
 
-    <main class="p-6">
-        <section id="summary" class="bg-white shadow-lg p-4 rounded mb-4 animate__animated animate__fadeInUp">
+    <main class="p-4 sm:p-6 max-w-5xl mx-auto">
+        <section class="bg-white shadow-lg p-4 rounded mb-6">
             <h2 class="text-2xl font-semibold" id="summary-h2"></h2>
             <p id="summary-text"></p>
         </section>
-
-        <section id="experience" class="bg-white shadow-lg p-4 rounded mb-4 animate__animated animate__fadeInUp">
-            <h2 class="text-2xl font-semibold" id="experience-h2"></h2>
-            <ul id="experience-list" class="list-disc pl-6"></ul>
-        </section>
-
-        <section id="education" class="bg-white shadow-lg p-4 rounded mb-4 animate__animated animate__fadeInUp">
+        <section id="education" class="bg-white shadow-lg p-4 rounded mb-6 ">
             <h2 class="text-2xl font-semibold" id="education-h2"></h2>
             <ul id="education-list" class="list-disc pl-6"></ul>
         </section>
-
-        <section id="certifications" class="bg-white shadow-lg p-4 rounded mb-4 animate__animated animate__fadeInUp">
+        <section class="bg-white shadow-lg p-4 rounded mb-6">
+            <h2 class="text-2xl font-semibold" id="experience-h2"></h2>
+            <ul id="experience-list" class="list-disc pl-6"></ul>
+        </section>
+       
+        <section id="certifications" class="bg-white shadow-lg p-4 rounded mb-6">
             <h2 class="text-2xl font-semibold" id="certifications-h2"></h2>
             <div id="certification-slider"></div>
         </section>
-
-        <section id="projects" class="bg-white shadow-lg p-4 rounded mb-4 animate__animated animate__fadeInUp">
+        <section class="bg-white shadow-lg p-4 rounded mb-6">
             <h2 class="text-2xl font-semibold" id="projects-h2"></h2>
-            <ul id="projects-list" class="list-disc pl-6"></ul>
+            <div id="projects-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         </section>
 
-        <section id="skills" class="bg-white shadow-lg p-4 rounded mb-4 animate__animated animate__fadeInUp">
+        <section class="bg-white shadow-lg p-4 rounded mb-6">
             <h2 class="text-2xl font-semibold" id="skills-h2"></h2>
-            <ul id="skills-list" class="list-disc pl-6"></ul>
+            <ul id="skills-list" class="list-disc pl-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2"></ul>
         </section>
     </main>
 
-    <div class="fixed bottom-5 right-5">
-        <button id="back-to-top" class="hidden bg-blue-600 text-white p-3 rounded-full"><i class="fas fa-arrow-up"></i></button>
-        <button id="download-cv" class="bg-green-600 text-white p-3 rounded-full ml-2"><i class="fas fa-download"></i></button>
+    <div class="fixed bottom-5 right-5 flex flex-col space-y-2">
+        <button id="back-to-top" class="hidden bg-blue-600 text-white p-3 rounded-full shadow-lg"><i class="fas fa-arrow-up"></i></button>
+        <button id="download-cv" class="bg-green-600 text-white p-3 rounded-full shadow-lg"><i class="fas fa-download"></i></button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -65,31 +60,44 @@
     <script src="data.js"></script>
 
     <script>
-        let currentData = data_vi; // Mặc định là tiếng Việt
+        let currentData = data_vi;
 
         function switchLanguage(lang) {
             currentData = lang === 'vi' ? data_vi : data_en;
+
             $("#summary-h2").text(currentData.labels.summary);
             $("#experience-h2").text(currentData.labels.experience);
-            $("#education-h2").text(currentData.labels.education);
-            $("#certifications-h2").text(currentData.labels.certifications);
             $("#projects-h2").text(currentData.labels.projects);
             $("#skills-h2").text(currentData.labels.skills);
+            $("#education-h2").text(currentData.labels.education);
             $("#name").text(currentData.name);
             $("#email").text(currentData.email).attr("href", "mailto:" + currentData.email);
             $("#profile-picture").attr("src", currentData.profilePicture);
             $("#summary-text").text(currentData.summary);
-
-            $("#experience-list, #education-list, #certification-slider, #projects-list, #skills-list").html("");
-
-            currentData.experience.forEach(exp => {
-                $("#experience-list").append(`<li><h3 class="text-lg font-semibold">${exp.title}</h3><p>${exp.company} (${exp.time})</p><p>${exp.description}</p></li>`);
-            });
-
+            $("#certifications-h2").text(currentData.labels.certifications);
+            $("#experience-list, #projects-list, #skills-list").html("");
             currentData.education.forEach(edu => {
                 $("#education-list").append(`<li>${edu.degree} - ${edu.school} (${edu.time})</li>`);
             });
-
+            currentData.experience.forEach(exp => {
+                $("#experience-list").append(`<li><h3 class="text-lg font-semibold">${exp.title}</h3><p>${exp.company} (${exp.time})</p><p>${exp.description}</p></li>`);
+            });
+            
+            currentData.projects.forEach(project => {
+                $("#projects-list").append(`
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden p-4">
+                        <h3 class="text-lg font-semibold">${project.title}</h3>
+                        <p class="text-sm text-gray-700">${project.description}</p>
+                        <div class="grid grid-cols-2 gap-2 mt-2">
+                            ${project.images.map(image => `
+                                <a href="${image}" target="_blank">
+                                    <img src="${image}" alt="${project.title}" class="w-full h-32 object-cover rounded shadow-md">
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                `);
+            });
             currentData.certifications.forEach(cert => {
                 $("#certification-slider").append(`
                     <div class="certification bg-white shadow-md rounded-lg overflow-hidden m-2 inline-block" style="width: 300px; height: 400px;">
@@ -102,29 +110,27 @@
                     </div>
                 `);
             });
-
-           
-            currentData.projects.forEach(project => {
-                $("#projects-list").append(`
-                    <div class="project bg-white shadow-md rounded-lg overflow-hidden m-2 inline-block" style="width: 300px; height: 400px;">
-                        <h3 class="text-lg font-semibold p-4">${project.title}</h3>
-                        <p class="px-4">${project.description}</p>
-                        <div class="project-images p-4">
-                            ${project.images.map(image => `
-                                <a href="${image}" data-fancybox="gallery" data-caption="${project.title}">
-                                    <img src="${image}" alt="${project.title}" class="w-32 h-32 object-cover inline-block m-1">
-                                </a>
-                            `).join(' ')}
-                        </div>
-                    </div>
-                `);
-            });
-
             currentData.skills.forEach(skill => {
-                $("#skills-list").append(`<li>${skill}</li>`);
+                $("#skills-list").append(`<li class="bg-gray-200 p-2 rounded text-center list-none">${skill}</li>`);
             });
         }
 
+        $("#btn-vi").click(() => switchLanguage("vi"));
+        $("#btn-en").click(() => switchLanguage("en"));
+        $("#download-cv").click(() => downloadCV());
+
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $("#back-to-top").fadeIn();
+            } else {
+                $("#back-to-top").fadeOut();
+            }
+        });
+
+        $("#back-to-top").click(function () {
+            $("html, body").animate({ scrollTop: 0 }, 600);
+            return false;
+        });
         async function downloadCV() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
@@ -173,9 +179,6 @@
 
             doc.save(currentData.name + '.pdf');
         }
-        $("#btn-vi").click(() => switchLanguage("vi"));
-        $("#btn-en").click(() => switchLanguage("en"));
-        $("#download-cv").click(() => downloadCV());
         switchLanguage("vi");
     </script>
 </body>
