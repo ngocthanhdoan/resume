@@ -31,7 +31,10 @@
             <h2 class="text-2xl font-semibold" id="education-h2"></h2>
             <ul id="education-list" class="list-disc pl-6"></ul>
         </section>
-
+        <section class="bg-white shadow-lg p-4 rounded mb-6">
+            <h2 class="text-2xl font-semibold" id="certifications-h2"></h2>
+            <ul id="certifications-list" class="list-disc pl-6"></ul>
+        </section>
         <section class="bg-white shadow-lg p-4 rounded mb-6">
             <h2 class="text-2xl font-semibold" id="experience-h2"></h2>
             <ul id="experience-list" class="list-disc pl-6"></ul>
@@ -70,12 +73,21 @@
             $("#education-h2").text(currentData.labels.education);
             $("#name").text(currentData.name);
             $("#email").text(currentData.email).attr("href", "mailto:" + currentData.email);
+            $("#certifications-h2").text(currentData.labels.certifications);
             $("#profile-picture").attr("src", currentData.profilePicture);
             $("#summary-text").text(currentData.summary);
 
             $("#education-list").html(currentData.education.map(edu => `<li>${edu.degree} - ${edu.school} (${edu.time})</li>`).join(''));
             $("#experience-list").html(currentData.experience.map(exp => `<li><h3 class="text-lg font-semibold">${exp.title}</h3><p>${exp.company} (${exp.time})</p><p>${exp.description}</p></li>`).join(''));
-
+            $("#certifications-list").html(currentData.certifications.map(cert => `
+                <li class="bg-white shadow-md rounded-lg overflow-hidden p-4 mb-4 flex items-center animate__animated animate__fadeInUp transition-transform transform hover:scale-105">
+                    <img src="${cert.image}" alt="${cert.title}" class="w-24 h-24 object-cover rounded shadow-md mr-4">
+                    <div>
+                        <h3 class="text-lg font-semibold">${cert.title}</h3>
+                        <p class="text-sm text-gray-700">${cert.year}</p>
+                    </div>
+                </li>
+            `).join(''));
             $("#projects-list").html(currentData.projects.map(project => `
                 <div class="bg-white shadow-md rounded-lg overflow-hidden p-4">
                     <h3 class="text-lg font-semibold">${project.title}</h3>
@@ -154,6 +166,14 @@
             doc.save(currentData.name + '.pdf');
         }
         switchLanguage("vi");
+        document.title = currentData.name;
+        $("meta[name='description']").attr("content", currentData.summary);
+        $("meta[name='keywords']").attr("content", currentData.skills.join(', '));
+        $("meta[property='og:title']").attr("content", currentData.name);
+        $("meta[property='og:description']").attr("content", currentData.summary);
+        $("meta[property='og:image']").attr("content", currentData.profilePicture);
+        $("meta[property='og:type']").attr("content", "profile");
+        $("meta[property='og:url']").attr("content", window.location.href);
     </script>
 </body>
 
