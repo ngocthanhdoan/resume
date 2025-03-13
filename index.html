@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đoàn Ngọc Thành</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+            scroll-behavior: smooth;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #333;
+            padding: 1rem;
+            border-bottom: 2px solid #4A90E2;
+        }
+
+        header img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #4A90E2;
+        }
+
+        section {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        section:hover {
+            transform: scale(1.05);
+        }
+
+        h2 {
+            border-bottom: 2px solid #4A90E2;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            color: #4A90E2;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        ul li::before {
+            content: "\f00c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            margin-right: 0.5rem;
+            color: #4A90E2;
+        }
+
+        a {
+            color: #4A90E2;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4A90E2;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+        }
+
+        .certification {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .certification:hover {
+            transform: scale(1.05);
+        }
+
+        .certification img {
+            margin-right: 1rem;
+            border: 2px solid #4A90E2;
+            width: 50%;
+        }
+
+        .certification p {
+            margin: 0;
+            color: #f5f5f5;
+        }
+
+        .certification .title {
+            font-weight: bold;
+            color: #4A90E2;
+        }
+
+        .certification .year {
+            font-size: 0.875rem;
+            color: #ccc;
+        }
+
+        .certification-slider .slick-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .download-cv {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: #4A90E2;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+    <header class="bg-blue-600 text-white p-6 animate__animated animate__fadeIn">
+        <div>
+            <h1 class="text-3xl font-bold" id="name"></h1>
+            <address class="mt-2">
+                Email: <a href="#" id="email" class="text-blue-200 underline"></a>
+            </address>
+        </div>
+        <img id="profile-picture" alt="Profile Picture">
+    </header>
+    <main class="p-6">
+        <section id="summary" class="bg-white shadow-lg animate__animated animate__fadeInUp">
+            <h2 class="text-2xl font-semibold">Tóm tắt</h2>
+            <p id="summary-text"></p>
+        </section>
+        <section id="experience" class="bg-white shadow-lg animate__animated animate__fadeInUp">
+            <h2 class="text-2xl font-semibold">Kinh nghiệm Làm việc</h2>
+            <ul id="experience-list"></ul>
+        </section>
+        <section id="education" class="bg-white shadow-lg animate__animated animate__fadeInUp">
+            <h2 class="text-2xl font-semibold">Học vấn</h2>
+            <p id="education"></p>
+
+        </section>
+        <section id="certifications" class="bg-white shadow-lg animate__animated animate__fadeInUp">
+            <h2 class="text-2xl font-semibold">Chứng chỉ</h2>
+            <div class="certification-slider" id="certification-slider"></div>
+        </section>
+        <section id="projects" class="bg-white shadow-lg animate__animated animate__fadeInUp">
+            <h2 class="text-2xl font-semibold">Dự án</h2>
+            <ul id="projects-list"></ul>
+        </section>
+        <section id="extracurricular" class="bg-white shadow-lg animate__animated animate__fadeInUp">
+            <h2 class="text-2xl font-semibold">Hoạt động Ngoại khóa</h2>
+            <p id="extracurricular-text"></p>
+        </section>
+        <section id="languages" class="bg-white shadow-lg animate__animated animate__fadeInUp">
+            <h2 class="text-2xl font-semibold">Ngôn ngữ</h2>
+            <p id="languages-text"></p>
+        </section>
+        <section id="skills" class="bg-white shadow-lg animate__animated animate__fadeInUp">
+            <h2 class="text-2xl font-semibold">Kỹ năng</h2>
+            <ul id="skills-list"></ul>
+        </section>
+        <section id="references" class="bg-white shadow-lg animate__animated animate__fadeInUp">
+            <h2 class="text-2xl font-semibold">Tham chiếu</h2>
+            <p id="references-text"></p>
+        </section>
+    </main>
+    <div class="back-to-top" id="back-to-top"><i class="fas fa-arrow-up"></i></div>
+    <div class="download-cv" id="download-cv"><i class="fas fa-download"></i></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+        const data = {
+            name: "Đoàn Ngọc Thành",
+            email: "dnt.doanngocthanh@gmail.com",
+            profilePicture: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFUAfyVe3Easiycyh3isP9wDQTYuSmGPsPQvLIJdEYvQ_DsFq5Ez2Nh_QjiS3oZ3B8ZPfK9cZQyIStmQMV1lDPLw",
+            summary: "Là một chuyên viên lập trình ngôn ngữ Java với 5 năm kinh nghiệm. Có kinh nghiệm làm việc với Java Spring, GitHub Actions, GitLab CI/CD, và hệ điều hành Ubuntu. Có khả năng phân tích và giải quyết vấn đề tốt, với thành tích đáng kể trong việc cải thiện chất lượng sản phẩm.",
+            experience: [
+                {
+                    title: "Trợ lý kết nối api cổng thanh toán",
+                    time: "2019 - 2021",
+                    company: "Viettel Digital",
+                    description: "Hỗ trợ trong việc kết nối các api cổng thanh toán. Sử dụng Java Spring,PHP để xây dựng các ứng dụng kết nối."
+                },
+                {
+                    title: "Chuyên viên lập trình Java",
+                    time: "Tháng 12/2021 - Hiện tại",
+                    company: "Công ty bảo hiểm Cathay Life Việt Nam",
+                    description: "Xây dựng, phát triển các chức năng cho hệ thống b2e, b2c. Sử dụng Java EE, IBM WebSphere, Oracle Database."
+                }
+            ],
+            education: [{
+                degree: "Cử nhân Công nghệ Thông tin",
+                time: "2017 - 2021",
+                school: "Cao đẳng FPT Polytechnic"
+            },
+            {
+                degree: "Cử nhân Công nghệ Thông tin",
+                time: "2024- Nay",
+                school: "Học viện Công nghệ Bưu chính Viễn thông"
+            }
+            ],
+            certifications: [
+                {
+                    title: "Data Science Hacks, Tips and Tricks",
+                    year: "2025",
+                    image: "image/Data-Science-Hacks-Tips-and-Tricks.jpg",
+                    link: "https://courses.analyticsvidhya.com/certificates/a1byjlmswd"
+                },
+                {
+                    title: "Building a Deep Research AI Agent",
+                    year: "2025",
+                    image: "image/Building-a-Deep-Research-AI-Agent.jpg",
+                    link: "https://courses.analyticsvidhya.com/certificates/82o9dnwwh9"
+                }
+            ],
+            projects: [
+                {
+                    title: "Nhận diện thông tin CCCD bằng mã QR và OCR",
+                    description: "Java, Python",
+                    image: ["image/ocr_project_page-0001.jpg", "image/ocr_project_page-0001.jpg"]
+                },
+                {
+                    title: "Zalo Mini App Cathay Life Việt Nam",
+                    description: "https://zalo.me/s/382737585270983367/",
+                    image: ["image/zalominiapp_info.png"]
+                }
+            ],
+            extracurricular: "Lập trình, Tập đàn hát .... ",
+            languages: "Tiếng Anh (đọc hiểu)",
+            skills: [
+                "Java",
+                "Spring Boot",
+                "GitHub Actions",
+                "GitLab CI/CD",
+                "Ubuntu",
+                "Docker",
+                "JavaScript",
+                "Vue js",
+                "Node.js",
+                "Python"
+            ],
+            references: "Có thể cung cấp thông tin tham chiếu khi được yêu cầu."
+        };
+
+        $(document).ready(function () {
+            $('#name').text(data.name);
+            $('#email').text(data.email).attr('href', `mailto:${data.email}`);
+            $('#profile-picture').attr('src', data.profilePicture);
+            $('#summary-text').text(data.summary);
+
+            data.experience.forEach(exp => {
+                $('#experience-list').append(`
+                <li>
+                <h3 class="text-xl font-semibold">${exp.title}</h3>
+                <p>Thời gian: ${exp.time}</p>
+                <p>Công ty: ${exp.company}</p>
+                <p>Mô tả Công việc: ${exp.description}</p>
+                </li>
+            `);
+            });
+
+            data.education.forEach(edu => {
+                $('#education').append(`<p>${edu.degree}</p>`);
+                $('#education').append(`<p>${edu.time}</p>`);
+                $('#education').append(`<p>${edu.school}</p>`);
+                $('#education').append(`<br>`);
+            });
+
+            data.certifications.forEach(cert => {
+                $('#certification-slider').append(`
+                <div class="certification">
+                <a href="${cert.link}" tager="_blank">
+                <img src="${cert.image}" alt="${cert.title}">
+                <div>
+                    <p class="title">${cert.title}</p>
+                    <p class="year">${cert.year}</p>
+                </div>
+                </a>
+                </div>
+            `);
+            });
+
+
+            data.projects.forEach(project => {
+                $('#projects-list').append(`
+                <li>
+                <h3 class="text-xl font-semibold">${project.title}</h3>
+                <p>${project.description}</p>
+                <div>
+                    ${project.image.map(img => `<a href="${img}" data-fancybox="gallery-${project.title}" data-caption="${project.title}"><img src="${img}" alt="${project.title}" class="w-20 h-20 object-cover inline-block m-1"></a>`).join('')}
+                </div>
+                </li>
+            `);
+            });
+
+            $('#extracurricular-text').text(data.extracurricular);
+            $('#languages-text').text(data.languages);
+            $('#references-text').text(data.references);
+
+            data.skills.forEach(skill => {
+                $('#skills-list').append(`<li>${skill}</li>`);
+            });
+
+            $('.certification-slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 2000,
+                arrows: false
+            });
+
+            // Back to top button
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('#back-to-top').fadeIn();
+                } else {
+                    $('#back-to-top').fadeOut();
+                }
+            });
+
+            $('#back-to-top').click(function () {
+                $('html, body').animate({ scrollTop: 0 }, 600);
+                return false;
+            });
+
+            // Download CV as PDF
+            $('#download-cv').click(async function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: "portrait",
+                unit: "mm",
+                format: "a4"
+            });
+
+            // Link tải font từ CDN (Ví dụ: Roboto Regular)
+            const fontUrl = 'https://cdn.jsdelivr.net/npm/roboto-font@0.1.0/fonts/Roboto/roboto-regular-webfont.ttf';
+
+            // Tải font từ CDN và chuyển sang Base64
+            const response = await fetch(fontUrl);
+            const fontData = await response.arrayBuffer();
+            const base64Font = btoa(
+                new Uint8Array(fontData).reduce((data, byte) => data + String.fromCharCode(byte), '')
+            );
+
+            // Nhúng font vào jsPDF
+            doc.addFileToVFS('Roboto-Regular.ttf', base64Font);
+            doc.addFont('Roboto-Regular.ttf', 'Roboto', 'normal');
+            doc.setFont('Roboto', 'normal');
+            doc.setFontSize(12);
+
+            // Định dạng PDF
+            const margin = 20;
+            const lineHeight = 6;
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            const maxLineWidth = pageWidth - 2 * margin;
+            let y = 30;
+
+            // Hàm xử lý xuống dòng và trang mới
+            const splitTextAndAdd = (text, x, y) => {
+                const lines = doc.splitTextToSize(text, maxLineWidth);
+                lines.forEach(line => {
+                    if (y > pageHeight - 20) {
+                        doc.addPage();
+                        y = 20;
+                    }
+                    doc.text(line, x, y);
+                    y += lineHeight;
+                });
+                return y;
+            };
+
+            // Hàm thêm mục
+            const addSection = (title, content) => {
+                doc.setFont('Roboto', 'bold');
+                y = splitTextAndAdd(title + ":", margin, y + 5);
+                doc.setFont('Roboto', 'normal');
+                y = splitTextAndAdd(content, margin, y);
+                return y;
+            };
+
+            // Thông tin cá nhân
+            y = splitTextAndAdd(data.name.toUpperCase(), margin, y);
+            y = splitTextAndAdd(`Email: ${data.email}`, margin, y + 5);
+
+            // Các mục khác
+            addSection('SUMMARY', data.summary);
+            addSection('WORK EXPERIENCE',
+                data.experience.map(exp =>
+                    `${exp.title} (${exp.time})\n${exp.company}\n${exp.description}`
+                ).join('\n\n')
+            );
+
+            addSection('EDUCATION',
+                data.education.map(edu =>
+                    `${edu.degree}\n${edu.time}\n${edu.school}`
+                ).join('\n\n')
+            );
+
+            addSection('CERTIFICATIONS',
+                data.certifications.map(cert =>
+                    `${cert.title} (${cert.year})`
+                ).join('\n')
+            );
+
+            addSection('PROJECTS',
+                data.projects.map(project =>
+                    `${project.title}\n${project.description}`
+                ).join('\n\n')
+            );
+
+            addSection('EXTRACURRICULAR', data.extracurricular);
+            addSection('LANGUAGES', data.languages);
+            addSection('SKILLS', data.skills.join(', '));
+            addSection('REFERENCES', data.references);
+
+            // Lưu file
+            doc.save(data.name + '.pdf');
+        });
+
+
+        });
+    </script>
+</body>
+
+</html>
